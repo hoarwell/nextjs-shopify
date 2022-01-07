@@ -1,8 +1,9 @@
 import Head from 'next/head'
-import { getData } from '../util/api'
+import Link from 'next/link'
+import { getProducts } from '../util/api'
 
 export const getStaticProps = async () => {
-  const data = await getData()
+  const data = await getProducts()
 
   return {
     props: {
@@ -24,12 +25,14 @@ export default function Home({ products }) {
       <main>
         <ul>
         {
-          products.map(product => (
+          products.map(product => (          
               <li key = { product.id }>
-                <figure>
-                <img src = { product.images[0].src }/>
-                  <figcaption>{ product.title }</figcaption>
-                </figure>
+                <Link href = { `/products/${product.id}`}>
+                  <figure>
+                  <img src = { product.images[0].src }/>
+                    <figcaption>{ product.title }</figcaption>
+                  </figure>
+                </Link>
               </li>
           ))
         }
